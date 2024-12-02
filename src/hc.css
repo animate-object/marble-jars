@@ -11,6 +11,7 @@
   --hc-lilac: #d4a6ff;
   --hc-rose: #ff7dcd;
   --hc-sand: #f5deb3;
+  --hc-auburn: #632c20;
 }
 
 /* styles for font colors */
@@ -55,6 +56,10 @@
   color: var(--hc-sand) !important;
 }
 
+.hc-auburn {
+  color: var(--hc-auburn) !important;
+}
+
 /* styles for background colors */
 
 .hc-bg-coral {
@@ -97,6 +102,10 @@
   background-color: var(--hc-sand) !important;
 }
 
+.hc-bg-auburn {
+  background-color: var(--hc-auburn) !important;
+}
+
 /* styles for border colors */
 
 .hc-bd-coral {
@@ -137,6 +146,10 @@
 
 .hc-bd-sand {
   border-color: var(--hc-sand) !important;
+}
+
+.hc-bd-auburn {
+  border-color: var(--hc-auburn) !important;
 }
 
 /* styles for progress bar, s.t. bar matches habit color */
@@ -184,4 +197,8 @@ progress {
 
 .hc-sand::-webkit-progress-value {
   background-color: var(--hc-sand);
+}
+
+.hc-auburn::-webkit-progress-value {
+  background-color: var(--hc-auburn);
 }

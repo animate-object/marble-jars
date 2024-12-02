@@ -291,7 +291,9 @@ export const HabitAuthoringContainer = () => {
               if (stage?.onBack) {
                 setState(stage.onBack(state));
               } else {
-                app.setActiveView("habit-list");
+                app.setActiveView(
+                  habitStore.habitCount === 0 ? "welcome" : "habit-list"
+                );
               }
             }}
           >
@@ -320,6 +322,7 @@ export const HabitAuthoringContainer = () => {
             <Button
               variant="outline"
               color="success"
+              size="sm"
               onClick={() => {
                 saveHabit();
               }}

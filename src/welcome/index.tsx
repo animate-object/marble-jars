@@ -12,7 +12,7 @@ const Welcome = (): JSX.Element => {
       <p className="italic">Visualize habits to make them real</p>
       <EmptyJar strokeWidth={1} />
       <Button color="primary" onClick={() => setActiveView("habit-authoring")}>
-        Next
+        Get Started
       </Button>
     </div>
   );

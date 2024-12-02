@@ -13,7 +13,8 @@ type HabitColorName =
   | "royal"
   | "lilac"
   | "rose"
-  | "sand";
+  | "sand"
+  | "auburn";
 
 type HabitSchedule = TriggerSchedule;
 

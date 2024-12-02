@@ -9,6 +9,7 @@ const HABIT_COLORS: Array<HabitColorName> = [
   "lilac",
   "rose",
   "sand",
+  "auburn",
 ];
 
 interface HabitColorStyles {
