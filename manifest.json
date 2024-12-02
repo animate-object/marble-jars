@@ -8,7 +8,9 @@
         "sizes": "192x192"
       }
     ],
-    "start_url": "/index.html",
-    "display": "standalone"
+    "display": "standalone",
+    "homepage_url": "https://animate-object.github.io/marble-jars/",
+    "start_url": "/marble-jars/index.html",
+    "scope": "/marble-jars/"
   }
   
