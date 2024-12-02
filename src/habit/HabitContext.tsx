@@ -54,7 +54,7 @@ const PersistentHabitContextProvider = ({
   maxHabits = 5,
 }: {
   children: React.ReactNode;
-  maxHabits: number;
+  maxHabits?: number;
 }) => {
   const [habits, setHabits] = useLocalStorage<Habit[]>("habits", []);
   const [selectedHabitId, setSelectedHabitId] = useState<number | undefined>();
