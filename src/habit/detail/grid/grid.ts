@@ -1,7 +1,7 @@
 interface Cell {
   x: number;
   y: number;
-  fillColor?: string;
+  fillColor?: HabitColorName;
   isUnfillable?: boolean;
 }
 

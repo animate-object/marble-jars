@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./hc.css";
 import App from "./App.tsx";
 import { HabitContextProvider } from "./habit/HabitContext.tsx";
 import { AppContextProvider } from "./AppState.context.tsx";

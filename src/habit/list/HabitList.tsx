@@ -3,6 +3,7 @@ import { HabitContext } from "../HabitContext";
 import { Progress, Card, Navbar, Button } from "react-daisyui";
 import { AppContext } from "../../AppState.context";
 import { AppNavBar } from "../../layout/AppNavBar";
+import { HabitColors } from "../color";
 
 interface HabitListItemProps {
   habit: Habit;
@@ -31,7 +32,7 @@ const HabitListItem = ({
     >
       <Card.Body onClick={onClick}>
         <span className="text-sm italic sm:hidden font-light">{trigger}</span>
-        <Card.Title className={`text-${color}`}>
+        <Card.Title className={HabitColors.base(color)}>
           {action}
           <span className="text-sm italic hidden sm:block font-light">
             ({trigger})
@@ -39,7 +40,11 @@ const HabitListItem = ({
         </Card.Title>
         <div>
           <p>Progress: {progressPct}%</p>
-          <Progress value={progress} max={duration} />
+          <Progress
+            className={HabitColors.base(color)}
+            value={progress}
+            max={duration}
+          />
         </div>
       </Card.Body>
     </Card>

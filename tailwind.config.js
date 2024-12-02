@@ -1,23 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 
 const COLORS = [
-  "red-500",
-  "orange-400",
-  "yellow-400",
-  "lime-300",
-  "green-400",
-  "emerald-700",
-  "teal-300",
-  "cyan-400",
-  "indigo-400",
-  "violet-700",
-  "purple-600",
-  "pink-500",
+  "coral",
+  "sunshine",
+  "saffron",
+  "leaf",
+  "breeze",
+  "ocean",
+  "royal",
+  "lilac",
+  "rose",
+  "sand",
 ];
 
 const colorSafelist = COLORS.reduce((acc, color) => {
-  acc.push(`bg-${color}`);
-  acc.push(`text-${color}`);
+  acc.push(`hc-bg-${color}`);
+  acc.push(`hc-${color}`);
+  acc.push(`hc-bd-${color}`);
   return acc;
 }, []);
 

@@ -3,11 +3,17 @@ interface TriggerSchedule {
   trigger: string;
 }
 
-// interface PeriodicSchedule {
-//   kind: "periodic";
-//   period: "daily" | "weekly" | "monthly";
-//   n: number;
-// }
+type HabitColorName =
+  | "coral"
+  | "sunshine"
+  | "saffron"
+  | "leaf"
+  | "breeze"
+  | "ocean"
+  | "royal"
+  | "lilac"
+  | "rose"
+  | "sand";
 
 type HabitSchedule = TriggerSchedule;
 
@@ -18,7 +24,7 @@ interface HabitDefinition {
   schedule: HabitSchedule;
   action: string;
   duration: HabitDuration;
-  color: string;
+  color: HabitColorName;
 }
 
 interface Habit {

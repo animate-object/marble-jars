@@ -3,6 +3,7 @@ import { Button, Modal, Navbar } from "react-daisyui";
 import { HabitContext } from "../HabitContext";
 import { AppNavBar } from "../../layout/AppNavBar";
 import { GridDetail } from "./grid/GridDetail";
+import { HabitColors } from "../color";
 
 const DetailNav = ({
   onBack,
@@ -47,7 +48,7 @@ export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
           <div className="text-2xl font-light">
             {habit.definition.schedule.trigger}
           </div>
-          <div className={`text-2xl italic text-${color}`}>
+          <div className={`text-2xl italic ${HabitColors.base(color)}`}>
             {habit.definition.action}
           </div>
         </div>
@@ -60,7 +61,7 @@ export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
         </Button>
       )}
       {didJustTrack && (
-        <div className="h-12 italic text-success">
+        <div className={`h-12 italic ${HabitColors.base(color)}`}>
           Another marble in the jar.
         </div>
       )}

@@ -3,6 +3,7 @@
 import { useContext, useMemo } from "react";
 import { annotateCells, generateBasicCell, generateGrid } from "./grid";
 import { MeasurementContext } from "../../../util/Measurement.context";
+import { HabitColors } from "../../color";
 
 interface Props {
   habit: Habit;
@@ -40,7 +41,7 @@ export const GridDetail = ({ habit }: Props) => {
           {row.map((cell, x) => (
             <div
               key={x}
-              className={`bg-${cell.fillColor}`}
+              className={HabitColors.bg(cell.fillColor)}
               style={{
                 width: cellSize,
                 height: cellSize,

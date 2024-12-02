@@ -1,8 +1,10 @@
 import { useCallback, useContext, useState } from "react";
 import { FormContent, FormLayout } from "./FormLayout";
-import { Button, Select, Textarea } from "react-daisyui";
+import { Button, Navbar, Select, Textarea } from "react-daisyui";
 import { HabitContext } from "../HabitContext";
 import { AppContext } from "../../AppState.context";
+import { HabitColors } from "../color";
+import { AppNavBar } from "../../layout/AppNavBar";
 
 type HabitDraft = Partial<HabitDefinition>;
 
@@ -125,21 +127,6 @@ const DurationStage: FormStageRender = ({
   );
 };
 
-const COLORS: Record<string, string> = {
-  Red: "red-500",
-  Orange: "orange-400",
-  Yellow: "yellow-400",
-  Lime: "lime-300",
-  Green: "green-400",
-  Forest: "emerald-700",
-  Teal: "teal-300",
-  Cyan: "cyan-400",
-  Indigo: "indigo-400",
-  Violet: "violet-700",
-  Royal: "purple-600",
-  Pink: "pink-500",
-};
-
 const ColorStage: FormStageRender = ({
   draft,
   onUpdateDraft,
@@ -157,17 +144,21 @@ const ColorStage: FormStageRender = ({
         className="w-full text-lg"
         value={draft.color ?? ""}
         onChange={(evt) => {
-          onUpdateDraft({ color: evt.currentTarget.value });
+          onUpdateDraft({ color: evt.currentTarget.value as HabitColorName });
         }}
       >
         <Select.Option value="">Select a color</Select.Option>
-        {Object.entries(COLORS).map(([name, color]) => (
+        {HabitColors.list.map((color) => (
           <Select.Option key={color} value={color} className={`text-${color}`}>
-            {name}
+            {color}
           </Select.Option>
         ))}
       </Select>
-      <div className={`h-16 w-16 mt-8 mx-auto bg-${draft.color}`} />
+      <div
+        className={`h-16 w-16 mt-8 mx-auto rounded-lg ${HabitColors.bg(
+          draft.color
+        )}`}
+      />
     </FormContent>
   );
 };
@@ -184,7 +175,7 @@ const FinalizeStage: FormStageRender = ({ draft }: FormStageProps) => {
       <div className="flex flex-col justify-center items-evenly text-center">
         <div className="text-lg italic">{draft.schedule?.trigger}</div>
         <div>...</div>
-        <div className={`text-2xl italic text-${draft?.color}`}>
+        <div className={`text-2xl italic ${HabitColors.base(draft.color)}`}>
           {draft.action}
         </div>
         <div>...</div>
@@ -290,31 +281,28 @@ export const HabitAuthoringContainer = () => {
 
   return (
     <>
-      <FormLayout>
-        {stage?.render({
-          draft: state.habitDraft,
-          onUpdateDraft: updateHabitDraft,
-        })}
-        <div className="flex justify-evenly">
-          {
-            <Button
-              variant="outline"
-              color="neutral"
-              onClick={() => {
-                if (stage?.onBack) {
-                  setState(stage.onBack(state));
-                } else {
-                  app.setActiveView("habit-list");
-                }
-              }}
-            >
-              &lt; Back
-            </Button>
-          }
+      <AppNavBar>
+        <Navbar.Start>
+          <Button
+            variant="outline"
+            size="sm"
+            color="neutral"
+            onClick={() => {
+              if (stage?.onBack) {
+                setState(stage.onBack(state));
+              } else {
+                app.setActiveView("habit-list");
+              }
+            }}
+          >
+            &lt; Back
+          </Button>
+        </Navbar.Start>
+        <Navbar.End>
           {state.currentStage !== "finalize" && (
             <Button
-              variant="outline"
-              color="primary"
+              size="sm"
+              color="success"
               disabled={!stage?.validWhen(state.habitDraft)}
               onClick={() => {
                 if (stage?.nextStage) {
@@ -339,7 +327,13 @@ export const HabitAuthoringContainer = () => {
               Save Habit
             </Button>
           )}
-        </div>
+        </Navbar.End>
+      </AppNavBar>
+      <FormLayout>
+        {stage?.render({
+          draft: state.habitDraft,
+          onUpdateDraft: updateHabitDraft,
+        })}
       </FormLayout>
     </>
   );
