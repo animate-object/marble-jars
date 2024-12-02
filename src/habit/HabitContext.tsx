@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 import { useLocalStorage } from "../useLocalStorage";
 
 interface HabitContextType {
@@ -10,6 +10,8 @@ interface HabitContextType {
   createNewHabit: (definition: HabitDefinition) => void;
   trackHabitProgress: (habitId: number) => void;
   selectHabit: (habitId: number) => void;
+  clearSelectedHabit: () => void;
+  deleteHabit: (habitId: number) => void;
 }
 
 export const HabitContext = createContext<HabitContextType>({
@@ -19,6 +21,8 @@ export const HabitContext = createContext<HabitContextType>({
   trackHabitProgress: (_habitId: number) => {},
   clearAllHabits: () => {},
   selectHabit: (_habitId: number) => {},
+  clearSelectedHabit: () => {},
+  deleteHabit: (_habitId: number) => {},
 });
 
 // dumb provider for bootstrapping
@@ -36,6 +40,8 @@ const EmptyHabitContextProvider = ({
         trackHabitProgress: () => {},
         clearAllHabits: () => {},
         selectHabit: () => {},
+        clearSelectedHabit: () => {},
+        deleteHabit: () => {},
       }}
     >
       {children}
@@ -45,13 +51,18 @@ const EmptyHabitContextProvider = ({
 
 const PersistentHabitContextProvider = ({
   children,
+  maxHabits = 5,
 }: {
   children: React.ReactNode;
+  maxHabits: number;
 }) => {
   const [habits, setHabits] = useLocalStorage<Habit[]>("habits", []);
   const [selectedHabitId, setSelectedHabitId] = useState<number | undefined>();
 
   const createNewHabit = (definition: HabitDefinition) => {
+    if (habits.length >= maxHabits) {
+      return;
+    }
     setHabits([
       ...habits,
       {
@@ -87,6 +98,17 @@ const PersistentHabitContextProvider = ({
     [habits, selectedHabitId]
   );
 
+  const clearSelectedHabit = useCallback(() => {
+    setSelectedHabitId(undefined);
+  }, []);
+
+  const deleteHabit = useCallback(
+    (habitId: number) => {
+      setHabits(habits.filter((habit) => habit.id !== habitId));
+    },
+    [habits, setHabits]
+  );
+
   return (
     <HabitContext.Provider
       value={{
@@ -97,6 +119,9 @@ const PersistentHabitContextProvider = ({
         trackHabitProgress,
         clearAllHabits,
         selectHabit,
+        clearSelectedHabit,
+        deleteHabit,
+        maxHabits,
       }}
     >
       {children}

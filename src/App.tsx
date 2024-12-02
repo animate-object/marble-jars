@@ -5,6 +5,7 @@ import { AppContext, UiView } from "./AppState.context";
 import Welcome from "./welcome";
 import { HabitAuthoringContainer } from "./habit/authoring/HabitAuthoringContainer";
 import { HabitList } from "./habit/list/HabitList";
+import { HabitDetailContainer } from "./habit/detail/HabitDetail";
 
 // app state should be primarily concerned with the current view
 // our app is simple so we can avoid complex routing. only habit detail needs
@@ -15,7 +16,7 @@ const PAGES: Record<UiView, React.ReactNode> = {
   welcome: <Welcome />,
   "habit-authoring": <HabitAuthoringContainer />,
   "habit-list": <HabitList />,
-  "habit-detail": <div>Habit Detail Placeholder</div>,
+  "habit-detail": <HabitDetailContainer />,
 };
 
 const chooseActivePage = (view: UiView): React.ReactNode => {

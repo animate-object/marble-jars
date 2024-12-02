@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { HabitContext } from "../HabitContext";
 import { Progress, Card, Navbar, Button } from "react-daisyui";
 import { AppContext } from "../../AppState.context";
+import { AppNavBar } from "../../layout/AppNavBar";
 
 interface HabitListItemProps {
   habit: Habit;
@@ -26,9 +27,8 @@ const HabitListItem = ({
       className="cursor-pointer w-full border-sky-200"
       bordered
       compact
-      onClick={onClick}
     >
-      <Card.Body>
+      <Card.Body onClick={onClick}>
         <span className="text-sm italic sm:hidden font-light">{trigger}</span>
         <Card.Title>
           {action}
@@ -47,18 +47,23 @@ const HabitListItem = ({
 
 export const HabitListNav = () => {
   const app = useContext(AppContext);
+  const { maxHabits, habitCount } = useContext(HabitContext);
+
+  const newHabitsDisallowed = maxHabits != null && habitCount >= maxHabits;
 
   return (
-    <Navbar className="px-4 pt-4 bg-slate-300">
+    <AppNavBar>
       <Navbar.Start>
         <Button
           color="primary"
+          size="sm"
           onClick={() => app.setActiveView("habit-authoring")}
+          disabled={newHabitsDisallowed}
         >
-          New
+          + New
         </Button>
       </Navbar.Start>
-    </Navbar>
+    </AppNavBar>
   );
 };
 
@@ -72,9 +77,10 @@ export const HabitList = () => {
   return (
     <>
       <HabitListNav />
-      <div className="w-full p-4 pt-4 md:px-40 md:pt-20 flex flex-col gap-4">
+      <div className="w-full p-4 pt-4 md:px-40 md:pt-20 flex flex-col gap-4 overflow-y-auto">
         {habitStore.habits.map((habit) => (
           <HabitListItem
+            key={habit.id}
             habit={habit}
             onClick={() => handleSelectHabit(habit.id)}
           />
