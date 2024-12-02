@@ -18,6 +18,7 @@ interface HabitDefinition {
   schedule: HabitSchedule;
   action: string;
   duration: HabitDuration;
+  color: string;
 }
 
 interface Habit {

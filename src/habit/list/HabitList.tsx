@@ -15,6 +15,7 @@ const HabitListItem = ({
       action,
       schedule: { trigger },
       duration,
+      color,
     },
     progress,
   },
@@ -30,7 +31,7 @@ const HabitListItem = ({
     >
       <Card.Body onClick={onClick}>
         <span className="text-sm italic sm:hidden font-light">{trigger}</span>
-        <Card.Title>
+        <Card.Title className={`text-${color}`}>
           {action}
           <span className="text-sm italic hidden sm:block font-light">
             ({trigger})
@@ -38,7 +39,7 @@ const HabitListItem = ({
         </Card.Title>
         <div>
           <p>Progress: {progressPct}%</p>
-          <Progress color="success" value={progress} max={duration} />
+          <Progress value={progress} max={duration} />
         </div>
       </Card.Body>
     </Card>

@@ -6,8 +6,10 @@ import { AppContext } from "../../AppState.context";
 
 type HabitDraft = Partial<HabitDefinition>;
 
+type AuhtoringStage = "action" | "schedule" | "duration" | "color" | "finalize";
+
 interface HabitAuthoringState {
-  currentStage: "schedule" | "action" | "duration" | "finalize";
+  currentStage: AuhtoringStage;
   habitDraft: HabitDraft;
 }
 
@@ -123,6 +125,53 @@ const DurationStage: FormStageRender = ({
   );
 };
 
+const COLORS: Record<string, string> = {
+  Red: "red-500",
+  Orange: "orange-400",
+  Yellow: "yellow-400",
+  Lime: "lime-300",
+  Green: "green-400",
+  Forest: "emerald-700",
+  Teal: "teal-300",
+  Cyan: "cyan-400",
+  Indigo: "indigo-400",
+  Violet: "violet-700",
+  Royal: "purple-600",
+  Pink: "pink-500",
+};
+
+const ColorStage: FormStageRender = ({
+  draft,
+  onUpdateDraft,
+}: FormStageProps) => {
+  return (
+    <FormContent
+      explanation={
+        <div className="text-lg">
+          Choose a color for your habit. This color will be used to represent
+          your habit in the app.
+        </div>
+      }
+    >
+      <Select
+        className="w-full text-lg"
+        value={draft.color ?? ""}
+        onChange={(evt) => {
+          onUpdateDraft({ color: evt.currentTarget.value });
+        }}
+      >
+        <Select.Option value="">Select a color</Select.Option>
+        {Object.entries(COLORS).map(([name, color]) => (
+          <Select.Option key={color} value={color} className={`text-${color}`}>
+            {name}
+          </Select.Option>
+        ))}
+      </Select>
+      <div className={`h-16 w-16 mt-8 mx-auto bg-${draft.color}`} />
+    </FormContent>
+  );
+};
+
 const FinalizeStage: FormStageRender = ({ draft }: FormStageProps) => {
   return (
     <FormContent
@@ -135,7 +184,9 @@ const FinalizeStage: FormStageRender = ({ draft }: FormStageProps) => {
       <div className="flex flex-col justify-center items-evenly text-center">
         <div className="text-lg italic">{draft.schedule?.trigger}</div>
         <div>...</div>
-        <div className="text-lg italic">{draft.action}</div>
+        <div className={`text-2xl italic text-${draft?.color}`}>
+          {draft.action}
+        </div>
         <div>...</div>
         <div className="text-lg">
           To be repeated <span className="italic">{draft.duration}</span> times
@@ -146,10 +197,10 @@ const FinalizeStage: FormStageRender = ({ draft }: FormStageProps) => {
 };
 
 interface AuthoringStageDef {
-  stage: "action" | "schedule" | "duration" | "finalize";
+  stage: AuhtoringStage;
   render: FormStageRender;
   validWhen: (draft: HabitDraft) => boolean;
-  nextStage?: "action" | "schedule" | "duration" | "finalize";
+  nextStage?: AuhtoringStage;
   onBack?: (state: HabitAuthoringState) => HabitAuthoringState;
 }
 
@@ -178,7 +229,7 @@ const AUTHORING_STAGES: AuthoringStageDef[] = [
     stage: "duration",
     render: DurationStage,
     validWhen: (draft) => !!draft.duration,
-    nextStage: "finalize",
+    nextStage: "color",
     onBack: (state) => ({
       ...state,
       currentStage: "schedule",
@@ -189,16 +240,26 @@ const AUTHORING_STAGES: AuthoringStageDef[] = [
     }),
   },
   {
-    stage: "finalize",
-    render: FinalizeStage,
-    validWhen: (draft) => !!draft.duration,
+    stage: "color",
+    render: ColorStage,
+    validWhen: (draft) => !!draft.color,
+    nextStage: "finalize",
     onBack: (state) => ({
       ...state,
       currentStage: "duration",
       habitDraft: {
         ...state.habitDraft,
-        duration: undefined,
+        color: undefined,
       },
+    }),
+  },
+  {
+    stage: "finalize",
+    render: FinalizeStage,
+    validWhen: (draft) => !!draft.duration,
+    onBack: (state) => ({
+      ...state,
+      currentStage: "color",
     }),
   },
 ];

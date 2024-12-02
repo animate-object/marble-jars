@@ -10,11 +10,11 @@ interface Props {
 export const GridDetail = ({ habit }: Props) => {
   const { definition, progress } = habit;
 
-  const { duration } = definition;
+  const { duration, color } = definition;
 
   const capacity = duration;
   const filled = progress;
-  const fillColor = "blue";
+  const fillColor = color;
 
   const { windowHeightPx } = useContext(MeasurementContext);
   const { grid, height: gridHeight } = useMemo(() => {
@@ -40,10 +40,10 @@ export const GridDetail = ({ habit }: Props) => {
           {row.map((cell, x) => (
             <div
               key={x}
+              className={`bg-${cell.fillColor}`}
               style={{
                 width: cellSize,
                 height: cellSize,
-                backgroundColor: cell.fillColor,
                 border: "0.5px solid #eeeeee",
               }}
             />

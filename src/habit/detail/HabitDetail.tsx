@@ -33,6 +33,7 @@ interface HabitDetailProps {
 }
 export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
   const [didJustTrack, setDidJustTrack] = useState(false);
+  const { color } = habit.definition;
 
   const handleTrackhabit = useCallback(() => {
     onTrack();
@@ -46,7 +47,9 @@ export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
           <div className="text-2xl font-light">
             {habit.definition.schedule.trigger}
           </div>
-          <div className="text-2xl italic">{habit.definition.action}</div>
+          <div className={`text-2xl italic text-${color}`}>
+            {habit.definition.action}
+          </div>
         </div>
         <GridDetail habit={habit} />
       </div>
