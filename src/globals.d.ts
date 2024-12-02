@@ -3,13 +3,13 @@ interface TriggerSchedule {
   trigger: string;
 }
 
-interface PeriodicSchedule {
-  kind: "periodic";
-  period: "daily" | "weekly" | "monthly";
-  n: number;
-}
+// interface PeriodicSchedule {
+//   kind: "periodic";
+//   period: "daily" | "weekly" | "monthly";
+//   n: number;
+// }
 
-type HabitSchedule = TriggerSchedule | PeriodicSchedule;
+type HabitSchedule = TriggerSchedule;
 
 type HabitDuration = number;
 
@@ -18,4 +18,10 @@ interface HabitDefinition {
   schedule: HabitSchedule;
   action: string;
   duration: HabitDuration;
+}
+
+interface Habit {
+  id: number;
+  definition: HabitDefinition;
+  progress: number;
 }

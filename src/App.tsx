@@ -1,8 +1,10 @@
-import { act, useContext, useEffect, useMemo, useState } from "react";
-import { TailWindAndDaisyUIDemoPage } from "./CssDemoPage";
+import { useContext, useEffect, useMemo } from "react";
 import { FullScreenVerticalContainer } from "./layout/FullScreenVerticalContainer";
 import { HabitContext } from "./habit/HabitContext";
 import { AppContext, UiView } from "./AppState.context";
+import Welcome from "./welcome";
+import { HabitAuthoringContainer } from "./habit/authoring/HabitAuthoringContainer";
+import { HabitList } from "./habit/list/HabitList";
 
 // app state should be primarily concerned with the current view
 // our app is simple so we can avoid complex routing. only habit detail needs
@@ -10,9 +12,9 @@ import { AppContext, UiView } from "./AppState.context";
 
 const PAGES: Record<UiView, React.ReactNode> = {
   init: undefined,
-  welcome: <div>Welcome Placeholder</div>,
-  "habit-authoring": <div>Habit Authoring Placeholder</div>,
-  "habit-list": <div>Habit List Placeholder</div>,
+  welcome: <Welcome />,
+  "habit-authoring": <HabitAuthoringContainer />,
+  "habit-list": <HabitList />,
   "habit-detail": <div>Habit Detail Placeholder</div>,
 };
 
@@ -21,16 +23,18 @@ const chooseActivePage = (view: UiView): React.ReactNode => {
 };
 
 function App() {
-  const { habitCount } = useContext(HabitContext);
+  const { habitCount, selectedHabit } = useContext(HabitContext);
   const { setActiveView, activeView } = useContext(AppContext);
 
   useEffect(() => {
-    if (habitCount === 0) {
+    if (selectedHabit) {
+      setActiveView("habit-detail");
+    } else if (habitCount === 0) {
       setActiveView("welcome");
     } else {
       setActiveView("habit-list");
     }
-  }, [habitCount]);
+  }, [habitCount, selectedHabit]);
 
   const activePage = useMemo(() => chooseActivePage(activeView), [activeView]);
 

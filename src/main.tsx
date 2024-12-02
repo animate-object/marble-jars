@@ -8,9 +8,9 @@ import { AppContextProvider } from "./AppState.context.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AppContextProvider>
-      <HabitContextProvider.Empty>
+      <HabitContextProvider.Peristent>
         <App />
-      </HabitContextProvider.Empty>
+      </HabitContextProvider.Peristent>
     </AppContextProvider>
   </StrictMode>
 );
