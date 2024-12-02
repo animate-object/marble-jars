@@ -1,3 +1,5 @@
+import { HabitColors } from "../habit/color";
+
 interface Props {
   fill?: string;
   stroke?: string;
@@ -28,7 +30,6 @@ const EmptyJar = ({
         stroke={stroke}
         strokeWidth={strokeWidth}
       />
-
       {/* Jar Neck */}
       <rect
         x="60"
@@ -41,9 +42,33 @@ const EmptyJar = ({
         stroke={stroke}
         strokeWidth={strokeWidth}
       />
-
       {/* Inner Rim */}
-      <rect x="60" y="60" width="80" height="5" fill={stroke} />
+      <rect x="65" y="60" width="70" height="2" fill={stroke} />
+      {/* Marble */}
+      <circle
+        cx="78"
+        cy="228"
+        r="10"
+        fill={fill}
+        className={HabitColors.styles.saffron.base}
+        strokeWidth={strokeWidth}
+      />
+      <circle
+        cx="100"
+        cy="228"
+        r="10"
+        fill={fill}
+        className={HabitColors.styles.ocean.base}
+        strokeWidth={strokeWidth}
+      />
+      <circle
+        cx="122"
+        cy="228"
+        r="10"
+        fill={fill}
+        className={HabitColors.styles.rose.base}
+        strokeWidth={strokeWidth}
+      />
     </svg>
   );
 };

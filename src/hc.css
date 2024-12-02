@@ -18,46 +18,57 @@
 
 .hc-coral {
   color: var(--hc-coral) !important;
+  stroke: var(--hc-coral) !important;
 }
 
 .hc-sunshine {
   color: var(--hc-sunshine) !important;
+  stroke: var(--hc-sunshine) !important;
 }
 
 .hc-saffron {
   color: var(--hc-saffron) !important;
+  stroke: var(--hc-saffron) !important;
 }
 
 .hc-leaf {
   color: var(--hc-leaf) !important;
+  stroke: var(--hc-leaf) !important;
 }
 
 .hc-breeze {
   color: var(--hc-breeze) !important;
+  stroke: var(--hc-breeze) !important;
 }
 
 .hc-ocean {
   color: var(--hc-ocean) !important;
+  stroke: var(--hc-ocean) !important;
 }
 
 .hc-royal {
   color: var(--hc-royal) !important;
+  stroke: var(--hc-royal) !important;
 }
 
 .hc-lilac {
   color: var(--hc-lilac) !important;
+  stroke: var(--hc-lilac) !important;
 }
 
 .hc-rose {
   color: var(--hc-rose) !important;
+  stroke: var(--hc-rose) !important;
 }
 
 .hc-sand {
   color: var(--hc-sand) !important;
+  stroke: var(--hc-sand) !important;
 }
 
 .hc-auburn {
   color: var(--hc-auburn) !important;
+  stroke: var(--hc-auburn) !important;
 }
 
 /* styles for background colors */
