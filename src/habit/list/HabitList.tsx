@@ -54,14 +54,18 @@ export const HabitListNav = () => {
   return (
     <AppNavBar>
       <Navbar.Start>
-        <Button
-          color="primary"
-          size="sm"
-          onClick={() => app.setActiveView("habit-authoring")}
-          disabled={newHabitsDisallowed}
-        >
-          + New
-        </Button>
+        {!newHabitsDisallowed && (
+          <Button
+            color="primary"
+            size="sm"
+            onClick={() => app.setActiveView("habit-authoring")}
+          >
+            + New
+          </Button>
+        )}
+        {newHabitsDisallowed && (
+          <span className="text-slate-700">Max {maxHabits} habits</span>
+        )}
       </Navbar.Start>
     </AppNavBar>
   );
