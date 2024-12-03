@@ -8,21 +8,21 @@ interface HabitContextType {
   maxHabits?: number;
   clearAllHabits: () => void;
   createNewHabit: (definition: HabitDefinition) => void;
-  trackHabitProgress: (habitId: number) => void;
-  selectHabit: (habitId: number) => void;
+  trackHabitProgress: (habitId: HabitId) => void;
+  selectHabit: (habitId: HabitId) => void;
   clearSelectedHabit: () => void;
-  deleteHabit: (habitId: number) => void;
+  deleteHabit: (habitId: HabitId) => void;
 }
 
 export const HabitContext = createContext<HabitContextType>({
   habits: [],
   habitCount: 0,
   createNewHabit: () => {},
-  trackHabitProgress: (_habitId: number) => {},
+  trackHabitProgress: (_habitId: HabitId) => {},
   clearAllHabits: () => {},
-  selectHabit: (_habitId: number) => {},
+  selectHabit: (_habitId: HabitId) => {},
   clearSelectedHabit: () => {},
-  deleteHabit: (_habitId: number) => {},
+  deleteHabit: (_habitId: HabitId) => {},
 });
 
 // dumb provider for bootstrapping
@@ -49,6 +49,8 @@ const EmptyHabitContextProvider = ({
   );
 };
 
+type SchematizedHabitList = SchematizedData<Habit[]>;
+
 const PersistentHabitContextProvider = ({
   children,
   maxHabits = 5,
@@ -56,25 +58,35 @@ const PersistentHabitContextProvider = ({
   children: React.ReactNode;
   maxHabits?: number;
 }) => {
-  const [habits, setHabits] = useLocalStorage<Habit[]>("habits", []);
-  const [selectedHabitId, setSelectedHabitId] = useState<number | undefined>();
+  const [{ data: habits }, setHabits] = useLocalStorage<SchematizedHabitList>(
+    "habit-list",
+    {
+      schemaVersion: "1",
+      data: [],
+    }
+  );
+  const [selectedHabitId, setSelectedHabitId] = useState<HabitId | undefined>();
+
+  const setHabitsWithSchema = useCallback((habits: Habit[]) => {
+    setHabits({ schemaVersion: "1", data: habits });
+  }, []);
 
   const createNewHabit = (definition: HabitDefinition) => {
     if (habits.length >= maxHabits) {
       return;
     }
-    setHabits([
+    setHabitsWithSchema([
       ...habits,
       {
-        id: habits.length + 1,
+        id: crypto.randomUUID(),
         definition,
         progress: 0,
       },
     ]);
   };
 
-  const trackHabitProgress = (habitId: number) => {
-    setHabits(
+  const trackHabitProgress = (habitId: HabitId) => {
+    setHabitsWithSchema(
       habits.map((habit) =>
         habit.id === habitId
           ? { ...habit, progress: habit.progress + 1 }
@@ -84,10 +96,10 @@ const PersistentHabitContextProvider = ({
   };
 
   const clearAllHabits = () => {
-    setHabits([]);
+    setHabitsWithSchema([]);
   };
 
-  const selectHabit = (habitId: number) => {
+  const selectHabit = (habitId: HabitId) => {
     setSelectedHabitId(habitId);
   };
 
@@ -103,8 +115,8 @@ const PersistentHabitContextProvider = ({
   }, []);
 
   const deleteHabit = useCallback(
-    (habitId: number) => {
-      setHabits(habits.filter((habit) => habit.id !== habitId));
+    (habitId: HabitId) => {
+      setHabitsWithSchema(habits.filter((habit) => habit.id !== habitId));
     },
     [habits, setHabits]
   );

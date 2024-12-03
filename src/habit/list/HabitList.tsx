@@ -80,7 +80,7 @@ export const HabitListNav = () => {
 export const HabitList = () => {
   const habitStore = useContext(HabitContext);
 
-  const handleSelectHabit = (habitId: number) => {
+  const handleSelectHabit = (habitId: HabitId) => {
     habitStore.selectHabit(habitId);
   };
 

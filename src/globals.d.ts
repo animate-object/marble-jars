@@ -20,8 +20,14 @@ type HabitSchedule = TriggerSchedule;
 
 type HabitDuration = number;
 
+type HabitId = string;
+
+type SchematizedData<T> = {
+  schemaVersion: string;
+  data: T;
+};
+
 interface HabitDefinition {
-  id: number;
   schedule: HabitSchedule;
   action: string;
   duration: HabitDuration;
@@ -29,7 +35,7 @@ interface HabitDefinition {
 }
 
 interface Habit {
-  id: number;
+  id: HabitId;
   definition: HabitDefinition;
   progress: number;
 }
