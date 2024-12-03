@@ -55,7 +55,13 @@ export const HabitListNav = () => {
   const app = useContext(AppContext);
   const { maxHabits, habitCount } = useContext(HabitContext);
 
+  const remainingHabits = maxHabits != null ? maxHabits - habitCount : null;
   const newHabitsDisallowed = maxHabits != null && habitCount >= maxHabits;
+  const remainingHabitsString: string | undefined = !!(
+    remainingHabits && remainingHabits > 0
+  )
+    ? `${remainingHabits} habit${remainingHabits > 1 ? "s" : ""} left`
+    : undefined;
 
   return (
     <AppNavBar>
@@ -69,8 +75,10 @@ export const HabitListNav = () => {
             + New
           </Button>
         )}
-        {newHabitsDisallowed && (
-          <span className="text-slate-700">Max {maxHabits} habits</span>
+        {!!remainingHabitsString && (
+          <span className="text-sm italic text-neutral-500 ml-2">
+            {remainingHabitsString}
+          </span>
         )}
       </Navbar.Start>
     </AppNavBar>
