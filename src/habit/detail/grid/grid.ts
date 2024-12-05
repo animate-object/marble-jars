@@ -1,6 +1,7 @@
 interface Cell {
   x: number;
   y: number;
+  idx: number;
   fillColor?: HabitColorName;
   isUnfillable?: boolean;
 }
@@ -8,6 +9,7 @@ interface Cell {
 interface GenerateCellOptions {
   x: number;
   y: number;
+  idx: number;
 }
 
 interface GridGenOptions<T> {
@@ -19,6 +21,7 @@ interface GridGenOptions<T> {
 interface GridData<T> {
   height: number;
   width: number;
+  size: number;
   grid: T[][];
 }
 
@@ -40,7 +43,7 @@ export const generateGrid = <T extends Cell>(
   for (let y = 0; y < height; y++) {
     let row: T[] = [];
     for (let x = 0; x < width; x++) {
-      row.push(generateCell({ x, y }));
+      row.push(generateCell({ x, y, idx: y * width + x }));
     }
     grid.push(row);
   }
@@ -49,10 +52,16 @@ export const generateGrid = <T extends Cell>(
     height,
     width,
     grid,
+    size: width * height,
   };
 };
 
-export const generateBasicCell = ({ x, y }: GenerateCellOptions): Cell => ({
+export const generateBasicCell = ({
+  x,
+  y,
+  idx,
+}: GenerateCellOptions): Cell => ({
+  idx,
   x,
   y,
   fillColor: undefined,
@@ -96,6 +105,7 @@ export const annotateCells = (
     height,
     width,
     grid,
+    size: width * height,
   };
 };
 

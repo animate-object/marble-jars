@@ -97,7 +97,7 @@ const DurationStage: FormStageRender = ({
   onUpdateDraft,
   draft,
 }: FormStageProps) => {
-  const options = [25, 50, 100, 150, 200, 250, 500, 1000];
+  const options = [10, 20, 30, 40, 50, 60, 70, 100, 150, 200, 250, 500, 1000];
   return (
     <FormContent
       explanation={

@@ -4,6 +4,7 @@ import { HabitContext } from "../HabitContext";
 import { AppNavBar } from "../../layout/AppNavBar";
 import { GridDetail } from "./grid/GridDetail";
 import { HabitColors } from "../color";
+import { JarOfMarblesDetail } from "./grid/JarOfMarblesDetail";
 
 const DetailNav = ({
   onBack,
@@ -34,7 +35,10 @@ interface HabitDetailProps {
 }
 export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
   const [didJustTrack, setDidJustTrack] = useState(false);
+  const habitComplete = habit.progress >= habit.definition.duration;
   const { color } = habit.definition;
+
+  const canTrack = !habitComplete && !didJustTrack;
 
   const handleTrackhabit = useCallback(() => {
     onTrack();
@@ -52,13 +56,18 @@ export const HabitDetail = ({ habit, onTrack }: HabitDetailProps) => {
             {habit.definition.action}
           </div>
         </div>
-        <GridDetail habit={habit} />
+        <JarOfMarblesDetail habit={habit} />
       </div>
 
-      {!didJustTrack && (
+      {canTrack && (
         <Button color="success" onClick={handleTrackhabit}>
           Track Habit
         </Button>
+      )}
+      {habitComplete && (
+        <div className={`h-12 italic ${HabitColors.base(color)}`}>
+          The jar is full! Habit complete.
+        </div>
       )}
       {didJustTrack && (
         <div className={`h-12 italic ${HabitColors.base(color)}`}>

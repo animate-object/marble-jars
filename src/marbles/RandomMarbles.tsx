@@ -169,7 +169,7 @@ const stripeFillGenerator: FillGenerator = (
   const stripeColor = sometimesSelectAlternateHabitColorValue(
     baseColor,
     tuning,
-    7
+    5
   );
   const adjustedBaseColor = adjustHue(baseColor, tuning);
 
@@ -296,7 +296,7 @@ const FILL_GENERATOR_BAG: Array<keyof typeof GENERATOR_MAP> = [
   "lightness",
 ];
 
-export const RandomMarbleWithBaseColor = (props: Props) => {
+export const RandomMarbleWithBaseColor = (props: Props): JSX.Element => {
   const { radius, rng } = props;
   const size = radius * 2;
   const offset = radius;
@@ -321,7 +321,7 @@ export const RandomMarbleWithBaseColor = (props: Props) => {
 
   if (typeof generator !== "function") {
     console.warn({ generator, msg: "generator is not a function" });
-    return null;
+    return <></>;
   }
 
   const { defs, fill } = generator(props, tuningPart);
