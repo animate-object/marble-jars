@@ -2,7 +2,6 @@ import { useCallback, useContext, useRef, useState } from "react";
 import { Button, Modal, Navbar } from "react-daisyui";
 import { HabitContext } from "../HabitContext";
 import { AppNavBar } from "../../layout/AppNavBar";
-import { GridDetail } from "./grid/GridDetail";
 import { HabitColors } from "../color";
 import { JarOfMarblesDetail } from "./grid/JarOfMarblesDetail";
 
