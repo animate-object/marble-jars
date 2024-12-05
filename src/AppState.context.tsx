@@ -5,7 +5,8 @@ export type UiView =
   | "welcome"
   | "habit-authoring"
   | "habit-list"
-  | "habit-detail";
+  | "habit-detail"
+  | "svg-testing";
 
 interface AppStateContextType {
   activeView: UiView;

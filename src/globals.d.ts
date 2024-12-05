@@ -39,3 +39,25 @@ interface Habit {
   definition: HabitDefinition;
   progress: number;
 }
+
+interface SvgSettings {
+  // the seed of the prng
+  seed: string;
+
+  // a random number from a prng, 0-1
+  rng: number;
+  // the marbles column offset counting from the left, starting at 0
+  x: number;
+
+  // the marbles row offset counting from the top, starting at 0
+  y: number;
+
+  // the index of the marble in the list of marbles, starting at 0
+  idx: number;
+
+  // base color name
+  baseColor: HabitColorName;
+
+  // marble radius in pixels
+  radius: number;
+}
